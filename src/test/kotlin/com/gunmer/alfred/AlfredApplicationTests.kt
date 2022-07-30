@@ -1,10 +1,10 @@
-package com.gunmer.alfredapi
+package com.gunmer.alfred
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class AlfredApiApplicationTests {
+class AlfredApplicationTests {
 
     @Test
     fun contextLoads() {
