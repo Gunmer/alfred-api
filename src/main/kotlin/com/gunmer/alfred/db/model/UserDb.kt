@@ -5,15 +5,18 @@ import com.gunmer.alfred.domain.user.UserPrototype
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
+import javax.persistence.Table
 
-@Entity(name = "user")
+@Entity
+@Table(name = "users")
 data class UserDb(
     @Id
+    @Column(name = "uuid")
     val id: String,
-    @Column
+    @Column(name = "name")
     val name: String,
-    @Column
-    val familyName: String?,
+    @Column(name = "family_name")
+    val familyName: String,
 ) {
     companion object : UserPrototype<UserDb> {
         override fun cloneToPrototype(entity: User): UserDb {

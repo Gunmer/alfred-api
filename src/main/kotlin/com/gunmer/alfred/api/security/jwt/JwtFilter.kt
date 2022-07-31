@@ -19,18 +19,20 @@ class JwtFilter(
     private val authorization = "Authorization"
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
-        try {
-            val jwtToken = getJwtToken(request)
-            val authentication = jwtProvider.authenticate(jwtToken)
+        val jwtToken = getJwtToken(request)
+        jwtToken?.let {
+            log.debug("security token found in ${request.method} ${request.requestURI}")
+            val authentication = jwtProvider.authenticate(it)
             SecurityContextHolder.getContext().authentication = authentication
-        } catch (e: Exception) {
-            log.error("Security error: ${e.localizedMessage}")
+            log.debug("Authentication successfully with user ${authentication.credentials}")
         }
         filterChain.doFilter(request, response)
     }
 
-    private fun getJwtToken(request: HttpServletRequest): String {
-        val authorizationHeader = request.getHeader(authorization) ?: throw Exception("Authorization header not found in ${request.method} ${request.requestURI}")
-        return if (authorizationHeader.startsWith(bearer)) authorizationHeader.substring(bearer.length) else authorizationHeader
+    private fun getJwtToken(request: HttpServletRequest): String? {
+        val authorizationHeader = request.getHeader(authorization)
+        return authorizationHeader?.let {
+            if (it.startsWith(bearer)) it.substring(bearer.length) else it
+        }
     }
 }

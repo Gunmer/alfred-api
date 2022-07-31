@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse
 class JwtEntrypoint : AuthenticationEntryPoint {
     private val log = KotlinLogging.logger {}
 
-    override fun commence(request: HttpServletRequest?, response: HttpServletResponse?, authException: AuthenticationException?) {
-        log.debug("Unauthorized request!!!")
+    override fun commence(request: HttpServletRequest, response: HttpServletResponse?, authException: AuthenticationException?) {
+        log.error("Unauthorized request: ${request.method} ${request.requestURI}")
         response?.sendError(HttpServletResponse.SC_UNAUTHORIZED, "unauthorized")
     }
 }

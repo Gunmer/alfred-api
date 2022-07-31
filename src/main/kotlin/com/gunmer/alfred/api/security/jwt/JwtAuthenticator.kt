@@ -12,7 +12,7 @@ class JwtAuthenticator(
     }
 
     override fun getCredentials(): Any {
-        return {}
+        return user.id
     }
 
     override fun getPrincipal(): Any {

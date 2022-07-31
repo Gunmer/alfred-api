@@ -1,9 +1,9 @@
 package com.gunmer.alfred
 
+import com.gunmer.alfred.test.FunctionalTest
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
+@FunctionalTest
 class AlfredApplicationTests {
 
     @Test
