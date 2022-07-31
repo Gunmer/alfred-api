@@ -58,7 +58,10 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform()
+    val tags: String = System.getProperty("tags", "UnitTest,FunctionalTest")
+    useJUnitPlatform{
+        includeTags = tags.split(",").toSet()
+    }
     finalizedBy(tasks.jacocoTestReport)
 }
 

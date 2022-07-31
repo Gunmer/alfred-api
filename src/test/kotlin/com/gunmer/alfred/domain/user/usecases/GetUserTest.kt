@@ -1,10 +1,10 @@
 package com.gunmer.alfred.domain.user.usecases
 
-import com.gunmer.alfred.test.FixtureGenerator
-import com.gunmer.alfred.test.UnitTest
 import com.gunmer.alfred.domain.user.User
 import com.gunmer.alfred.domain.user.UserRepositoryAdapter
-import org.junit.jupiter.api.Assertions.*
+import com.gunmer.alfred.test.FixtureGenerator
+import com.gunmer.alfred.test.UnitTest
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
@@ -19,7 +19,7 @@ class GetUserTest {
     lateinit var userRepositoryAdapter: UserRepositoryAdapter
 
     @Test
-    fun `when given userId should return an user`() {
+    fun `should return an user when given userId `() {
         val userId = FixtureGenerator.generate(String::class)
         whenever(userRepositoryAdapter.find(userId)).thenReturn(FixtureGenerator.generate(User::class))
 
