@@ -4,6 +4,8 @@
 
 ## Getting Started
 
+> All commits in this project comply with the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+
 ### Prerequisites
 
 You must be had installed:
