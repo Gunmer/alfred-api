@@ -1,9 +1,9 @@
-name: Release
+name: Continuos Deployment
 
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   release-please:
