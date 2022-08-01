@@ -1,0 +1,26 @@
+name: Continuos Integration
+
+on:
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        # Check Conventional Commits
+      - uses: matmar10/prcolinter@1.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      # Run tests
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: azul
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Run test
+        run: ./gradlew test
