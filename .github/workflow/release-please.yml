@@ -1,9 +1,8 @@
-name: release-please
+name: Release
 
 on:
   push:
     branches:
-      - feature/*
       - develop
 
 jobs:
@@ -15,5 +14,4 @@ jobs:
           command: release-pr
           release-type: simple
           package-name: alfred-api
-          bump-minor-pre-major: true
           changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
