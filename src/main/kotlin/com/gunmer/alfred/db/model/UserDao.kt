@@ -1,13 +1,13 @@
 package com.gunmer.alfred.db.model
 
-import com.gunmer.alfred.db.model.FamilyDb.Companion.cloneFromPrototype
+import com.gunmer.alfred.db.model.FamilyDao.Companion.convertTo
 import com.gunmer.alfred.domain.user.User
-import com.gunmer.alfred.domain.user.UserPrototype
+import com.gunmer.alfred.domain.user.UserConverter
 import javax.persistence.*
 
 @Entity
 @Table(name = "users")
-data class UserDb(
+data class UserDao(
     @Id
     @Column(name = "uuid")
     val uuid: String,
@@ -17,24 +17,24 @@ data class UserDb(
     val familyName: String,
     @ManyToOne
     @JoinColumn(name = "family_uuid")
-    val familyDb: FamilyDb?
+    val familyDao: FamilyDao?
 ) {
-    companion object : UserPrototype<UserDb> {
-        override fun cloneToPrototype(entity: User): UserDb {
-            return UserDb(
+    companion object : UserConverter<UserDao> {
+        override fun convertFrom(entity: User): UserDao {
+            return UserDao(
                 uuid = entity.id,
                 name = entity.name,
                 familyName = entity.familyName,
-                familyDb = null,
+                familyDao = null,
             )
         }
 
-        override fun UserDb.cloneFromPrototype(): User {
+        override fun UserDao.convertTo(): User {
             return User(
                 id = uuid,
                 name = name,
                 familyName = familyName,
-                family = familyDb?.cloneFromPrototype(),
+                family = familyDao?.convertTo(),
             )
         }
     }

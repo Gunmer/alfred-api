@@ -1,5 +1,5 @@
 package com.gunmer.alfred.domain.user
 
-interface UserRepositoryAdapter {
+interface UserRepository {
     fun find(userId: String): User?
 }

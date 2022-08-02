@@ -1,5 +1,5 @@
 package com.gunmer.alfred.domain.family
 
-interface FamilyRepositoryAdapter {
+interface FamilyRepository {
     fun create(family: Family)
 }
