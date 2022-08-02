@@ -1,7 +1,7 @@
 package com.gunmer.alfred.db.model
 
 import com.gunmer.alfred.domain.family.Family
-import com.gunmer.alfred.domain.family.FamilyPrototype
+import com.gunmer.alfred.domain.family.FamilyConverter
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -9,7 +9,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "families")
-data class FamilyDb(
+data class FamilyDao(
     @Id
     @Column(name = "uuid")
     val uuid: String,
@@ -17,15 +17,15 @@ data class FamilyDb(
     val name: String,
     ) {
 
-    companion object : FamilyPrototype<FamilyDb> {
-        override fun cloneToPrototype(entity: Family): FamilyDb {
-            return FamilyDb(
+    companion object : FamilyConverter<FamilyDao> {
+        override fun convertFrom(entity: Family): FamilyDao {
+            return FamilyDao(
                 uuid = entity.id,
                 name = entity.name,
             )
         }
 
-        override fun FamilyDb.cloneFromPrototype(): Family {
+        override fun FamilyDao.convertTo(): Family {
             return Family(
                 id = uuid,
                 name = name,

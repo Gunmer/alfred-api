@@ -1,4 +1,4 @@
-package com.gunmer.alfred.api.security.jwt.provider
+package com.gunmer.alfred.api.config.jwt.provider
 
 import org.springframework.security.core.Authentication
 
