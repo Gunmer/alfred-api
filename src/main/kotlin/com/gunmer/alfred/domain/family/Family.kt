@@ -5,5 +5,6 @@ import com.gunmer.alfred.domain.user.User
 data class Family(
     val id: String,
     val name: String,
-    val members: List<User>
+    val shoppingListId: String,
+    val members: List<User>,
 )

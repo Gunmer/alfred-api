@@ -7,5 +7,10 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS families (
   uuid varchar(255) primary key not null,
-  name varchar(255) not null
+  name varchar(255) not null,
+  shopping_list_uuid varchar(255) not null
 );
+
+CREATE TABLE IF NOT EXISTS shopping_lists (
+    uuid varchar(255) primary key not null
+)
