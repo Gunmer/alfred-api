@@ -1,6 +1,6 @@
-package com.gunmer.alfred.api.security.jwt
+package com.gunmer.alfred.api.config.jwt
 
-import com.gunmer.alfred.api.security.jwt.provider.JwtProvider
+import com.gunmer.alfred.api.config.jwt.provider.JwtProvider
 import mu.KotlinLogging
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component

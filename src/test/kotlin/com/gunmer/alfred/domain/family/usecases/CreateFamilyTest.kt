@@ -1,7 +1,7 @@
 package com.gunmer.alfred.domain.family.usecases
 
 import com.gunmer.alfred.domain.common.DomainExceptions
-import com.gunmer.alfred.domain.family.FamilyRepositoryAdapter
+import com.gunmer.alfred.domain.family.FamilyRepository
 import com.gunmer.alfred.domain.user.User
 import com.gunmer.alfred.test.UnitTest
 import io.github.glytching.junit.extension.exception.ExpectedException
@@ -20,14 +20,14 @@ class CreateFamilyTest {
     lateinit var useCase: CreateFamily
 
     @Mock
-    lateinit var familyRepositoryAdapter: FamilyRepositoryAdapter
+    lateinit var familyRepository: FamilyRepository
 
     @Test
     fun `should create new family`(@Random(excludes = ["family"]) user: User) {
 
         val family = useCase(user)
 
-        verify(familyRepositoryAdapter).create(any())
+        verify(familyRepository).create(any())
         assertNotNull(family)
         assertNotNull(family.id)
         assertEquals("${user.familyName} family", family.name)
