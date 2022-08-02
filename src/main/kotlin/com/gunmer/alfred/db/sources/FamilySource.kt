@@ -1,4 +1,4 @@
-package com.gunmer.alfred.db.repositories
+package com.gunmer.alfred.db.sources
 
 import com.gunmer.alfred.db.model.FamilyDao
 import org.springframework.data.repository.CrudRepository

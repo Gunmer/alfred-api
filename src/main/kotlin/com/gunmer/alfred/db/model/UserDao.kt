@@ -1,9 +1,11 @@
 package com.gunmer.alfred.db.model
 
-import com.gunmer.alfred.db.model.FamilyDao.Companion.convertTo
 import com.gunmer.alfred.domain.user.User
 import com.gunmer.alfred.domain.user.UserConverter
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Table
 
 @Entity
 @Table(name = "users")
@@ -15,9 +17,8 @@ data class UserDao(
     val name: String,
     @Column(name = "family_name")
     val familyName: String,
-    @ManyToOne
-    @JoinColumn(name = "family_uuid")
-    val familyDao: FamilyDao?
+    @Column(name = "family_uuid")
+    val familyUuid: String?
 ) {
     companion object : UserConverter<UserDao> {
         override fun convertFrom(entity: User): UserDao {
@@ -25,7 +26,7 @@ data class UserDao(
                 uuid = entity.id,
                 name = entity.name,
                 familyName = entity.familyName,
-                familyDao = null,
+                familyUuid = entity.familyId,
             )
         }
 
@@ -34,7 +35,7 @@ data class UserDao(
                 id = uuid,
                 name = name,
                 familyName = familyName,
-                family = familyDao?.convertTo(),
+                familyId = familyUuid,
             )
         }
     }
