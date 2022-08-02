@@ -1,4 +1,4 @@
-package com.gunmer.alfred.api.security.jwt
+package com.gunmer.alfred.api.config.jwt
 
 import mu.KotlinLogging
 import org.springframework.security.core.AuthenticationException
