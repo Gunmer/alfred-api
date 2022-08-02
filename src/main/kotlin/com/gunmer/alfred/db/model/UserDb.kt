@@ -1,34 +1,41 @@
 package com.gunmer.alfred.db.model
 
+import com.gunmer.alfred.db.model.FamilyDb.Companion.cloneFromPrototype
 import com.gunmer.alfred.domain.user.User
 import com.gunmer.alfred.domain.user.UserPrototype
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "users")
 data class UserDb(
     @Id
     @Column(name = "uuid")
-    val id: String,
+    val uuid: String,
     @Column(name = "name")
     val name: String,
     @Column(name = "family_name")
     val familyName: String,
+    @ManyToOne
+    @JoinColumn(name = "family_uuid")
+    val familyDb: FamilyDb?
 ) {
     companion object : UserPrototype<UserDb> {
         override fun cloneToPrototype(entity: User): UserDb {
             return UserDb(
-                id = entity.id,
+                uuid = entity.id,
                 name = entity.name,
-                familyName = entity.familyName
+                familyName = entity.familyName,
+                familyDb = null,
             )
         }
 
         override fun UserDb.cloneFromPrototype(): User {
-            return User(id, name, familyName)
+            return User(
+                id = uuid,
+                name = name,
+                familyName = familyName,
+                family = familyDb?.cloneFromPrototype(),
+            )
         }
     }
 }
