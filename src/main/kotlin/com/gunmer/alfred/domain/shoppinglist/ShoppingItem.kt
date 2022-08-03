@@ -4,5 +4,6 @@ data class ShoppingItem (
     val id: String,
     val description: String,
     val status: ShoppingItemStatus,
-    val count: Int,
+    val amount: Int,
+    val shoppingListId: String
 )
