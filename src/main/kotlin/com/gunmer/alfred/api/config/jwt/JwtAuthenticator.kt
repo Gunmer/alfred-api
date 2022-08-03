@@ -1,4 +1,4 @@
-package com.gunmer.alfred.api.security.jwt
+package com.gunmer.alfred.api.config.jwt
 
 import com.gunmer.alfred.domain.user.User
 import org.springframework.security.authentication.AbstractAuthenticationToken

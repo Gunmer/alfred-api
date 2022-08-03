@@ -36,8 +36,7 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
-    testImplementation("org.mockito:mockito-inline:4.6.1")
-    testImplementation("org.jeasy:easy-random-core:5.0.0")
+    testImplementation("io.github.glytching:junit-extensions:2.5.0")
 }
 
 dependencyManagement {
