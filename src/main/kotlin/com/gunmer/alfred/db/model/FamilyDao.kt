@@ -15,7 +15,7 @@ data class FamilyDao(
     val name: String,
     @Column(name = "shopping_list_uuid")
     val shoppingListUuid: String,
-    @OneToMany(mappedBy = "familyUuid")
+    @OneToMany(mappedBy = "familyUuid", fetch = FetchType.EAGER)
     val members: List<UserDao>
     ) {
 
