@@ -23,6 +23,8 @@ class SecurityConfig(
         http.cors().and().csrf().disable()
             .authorizeRequests()
             .antMatchers("/actuator/**").permitAll()
+            .antMatchers("/swagger-ui/**").permitAll()
+            .antMatchers("/v3/api-docs/**").permitAll()
             .antMatchers("**").authenticated()
             .and()
             .exceptionHandling().authenticationEntryPoint(jwtEntrypoint)
