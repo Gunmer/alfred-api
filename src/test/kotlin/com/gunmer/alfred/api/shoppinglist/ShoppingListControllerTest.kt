@@ -1,10 +1,12 @@
 package com.gunmer.alfred.api.shoppinglist
 
+import com.gunmer.alfred.api.shoppinglist.request.NewShoppingItemRequest
+import com.gunmer.alfred.domain.shoppinglist.ShoppingItem
 import com.gunmer.alfred.domain.shoppinglist.ShoppingList
 import com.gunmer.alfred.test.FixtureGenerator
 import com.gunmer.alfred.test.FunctionalTest
 import io.github.glytching.junit.extension.random.Random
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.web.client.TestRestTemplate
@@ -24,7 +26,7 @@ class ShoppingListControllerTest {
 
         val response = template.exchange("/shopping-list/$shoppingListId", HttpMethod.GET, httpEntity, ShoppingList::class.java)
 
-        Assertions.assertEquals(HttpStatus.OK, response.statusCode)
+        assertEquals(HttpStatus.OK, response.statusCode)
     }
 
     @Test
@@ -33,7 +35,29 @@ class ShoppingListControllerTest {
 
         val response = template.exchange("/shopping-list/$shoppingListId", HttpMethod.GET, httpEntity, String::class.java)
 
-        Assertions.assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
+        assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
+    }
+
+    @Test
+    fun `should add item in list`(@Random request: NewShoppingItemRequest) {
+        val shoppingListId = "1"
+        val httpEntity = FixtureGenerator.generateHttpEntity("1", request)
+
+        val response = template.exchange("/shopping-list/$shoppingListId/item", HttpMethod.POST, httpEntity, ShoppingItem::class.java)
+
+        assertEquals(HttpStatus.OK, response.statusCode)
+        assertEquals(request.description, response.body?.description)
+        assertEquals(request.amount, response.body?.amount)
+    }
+
+    @Test
+    fun `should response with NOT_FOUND when list not exist`(@Random request: NewShoppingItemRequest) {
+        val shoppingListId = "invent"
+        val httpEntity = FixtureGenerator.generateHttpEntity("1", request)
+
+        val response = template.exchange("/shopping-list/$shoppingListId/item", HttpMethod.POST, httpEntity, String::class.java)
+
+        assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
     }
 
 }
