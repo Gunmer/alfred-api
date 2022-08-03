@@ -1,6 +1,6 @@
-package com.gunmer.alfred.api.security.jwt.provider
+package com.gunmer.alfred.api.config.jwt.provider
 
-import com.gunmer.alfred.api.security.jwt.JwtAuthenticator
+import com.gunmer.alfred.api.config.jwt.JwtAuthenticator
 import com.gunmer.alfred.domain.user.usecases.GetUser
 import mu.KotlinLogging
 import org.springframework.security.core.Authentication

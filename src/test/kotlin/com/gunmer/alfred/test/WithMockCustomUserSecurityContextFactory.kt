@@ -1,6 +1,6 @@
 package com.gunmer.alfred.test
 
-import com.gunmer.alfred.api.security.jwt.JwtAuthenticator
+import com.gunmer.alfred.api.config.jwt.JwtAuthenticator
 import com.gunmer.alfred.domain.user.User
 import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.core.context.SecurityContextHolder
