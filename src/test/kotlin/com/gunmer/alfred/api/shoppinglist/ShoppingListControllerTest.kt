@@ -60,4 +60,15 @@ class ShoppingListControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.statusCode)
     }
 
+    @Test
+    fun `should remove item`() {
+        val shoppingListId = "1"
+        val shoppingItemId = "1"
+        val httpEntity = FixtureGenerator.generateHttpEntity("1", null)
+
+        val response = template.exchange("/shopping-list/$shoppingListId/item/$shoppingItemId", HttpMethod.DELETE, httpEntity, String::class.java)
+
+        assertEquals(HttpStatus.OK, response.statusCode)
+    }
+
 }
