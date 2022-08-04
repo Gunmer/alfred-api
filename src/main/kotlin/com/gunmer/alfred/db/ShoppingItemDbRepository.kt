@@ -17,8 +17,12 @@ class ShoppingItemDbRepository(
         shoppingItemSource.save(shoppingItemDao)
     }
 
-    override fun findNotArchivedItems(id: String): List<ShoppingItem> {
-        val itemDaos = shoppingItemSource.findAllByShoppingListUuidAndStatusIsNot(id, ShoppingItemStatus.ARCHIVED)
+    override fun findNotArchivedItems(shoppingListId: String): List<ShoppingItem> {
+        val itemDaos = shoppingItemSource.findAllByShoppingListUuidAndStatusIsNot(shoppingListId, ShoppingItemStatus.ARCHIVED)
         return itemDaos.map { it.convertTo() }
+    }
+
+    override fun remove(shoppingItemId: String) {
+        shoppingItemSource.deleteById(shoppingItemId)
     }
 }
