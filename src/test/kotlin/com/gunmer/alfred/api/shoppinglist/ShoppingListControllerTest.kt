@@ -1,7 +1,9 @@
 package com.gunmer.alfred.api.shoppinglist
 
 import com.gunmer.alfred.api.shoppinglist.request.NewShoppingItemRequest
+import com.gunmer.alfred.api.shoppinglist.request.UpdateItemRequest
 import com.gunmer.alfred.domain.shoppinglist.ShoppingItem
+import com.gunmer.alfred.domain.shoppinglist.ShoppingItemStatus
 import com.gunmer.alfred.domain.shoppinglist.ShoppingList
 import com.gunmer.alfred.test.FixtureGenerator
 import com.gunmer.alfred.test.FunctionalTest
@@ -39,7 +41,7 @@ class ShoppingListControllerTest {
     }
 
     @Test
-    fun `should add item in list`(@Random request: NewShoppingItemRequest) {
+    fun `should response with OK add item in list`(@Random request: NewShoppingItemRequest) {
         val shoppingListId = "1"
         val httpEntity = FixtureGenerator.generateHttpEntity("1", request)
 
@@ -61,12 +63,24 @@ class ShoppingListControllerTest {
     }
 
     @Test
-    fun `should remove item`() {
+    fun `should response with OK when remove item`() {
         val shoppingListId = "1"
         val shoppingItemId = "1"
         val httpEntity = FixtureGenerator.generateHttpEntity("1", null)
 
         val response = template.exchange("/shopping-list/$shoppingListId/item/$shoppingItemId", HttpMethod.DELETE, httpEntity, String::class.java)
+
+        assertEquals(HttpStatus.OK, response.statusCode)
+    }
+
+    @Test
+    fun `should response with OK update item`() {
+        val shoppingListId = "1"
+        val shoppingItemId = "2"
+        val request = UpdateItemRequest(status = ShoppingItemStatus.PURCHASED)
+        val httpEntity = FixtureGenerator.generateHttpEntity("1", request)
+
+        val response = template.exchange("/shopping-list/$shoppingListId/item/$shoppingItemId", HttpMethod.PUT, httpEntity, String::class.java)
 
         assertEquals(HttpStatus.OK, response.statusCode)
     }
