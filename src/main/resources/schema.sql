@@ -13,4 +13,12 @@ CREATE TABLE IF NOT EXISTS families (
 
 CREATE TABLE IF NOT EXISTS shopping_lists (
     uuid varchar(255) primary key not null
-)
+);
+
+CREATE TABLE IF NOT EXISTS shopping_items (
+    uuid varchar(255) primary key not null,
+    description varchar(255) not null,
+    status varchar(255) not null,
+    amount number not null,
+    shopping_list_uuid varchar(255) not null
+);
