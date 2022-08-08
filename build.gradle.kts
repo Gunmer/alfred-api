@@ -25,16 +25,17 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-kotlin:1.6.9")
     implementation("org.springdoc:springdoc-openapi-security:1.6.9")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.flywaydb:flyway-core:8.5.13")
+    implementation("org.postgresql:postgresql")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
-
-    runtimeOnly("com.h2database:h2")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    testImplementation("com.h2database:h2")
     testImplementation("io.github.glytching:junit-extensions:2.5.0")
 }
 
