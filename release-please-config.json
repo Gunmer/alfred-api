@@ -1,6 +1,8 @@
 {
   "packages": {
     ".": {
+      "package-name": "alfred-api",
+      "component": "api",
       "changelog-path": "CHANGELOG.md",
       "release-type": "simple",
       "bump-minor-pre-major": false,
