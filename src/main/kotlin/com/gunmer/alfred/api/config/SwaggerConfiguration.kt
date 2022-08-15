@@ -6,11 +6,16 @@ import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.security.SecurityRequirement
 import io.swagger.v3.oas.models.security.SecurityScheme
 import org.springdoc.core.GroupedOpenApi
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.info.BuildProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 class SwaggerConfiguration {
+
+    @Autowired
+    private lateinit var buildProperties: BuildProperties
 
     @Bean
     fun publicApi(): GroupedOpenApi? {
@@ -28,8 +33,8 @@ class SwaggerConfiguration {
             .addList("bearer-key", listOf())
         val info = Info()
             .title("Alfred API")
-            .description("An API")
-            .version("v0.1.0")
+            .description("An API for  manager shopping list")
+            .version("V${buildProperties.version}")
         val securityScheme = SecurityScheme()
             .type(SecurityScheme.Type.HTTP)
             .scheme("bearer").bearerFormat("JWT")
