@@ -2,7 +2,8 @@
   "packages": {
     "last-release-sha": "545365c3f35d4c5030718a66e09086392cf7a0ba",
     ".": {
-      "packageName": "alfred-api",
+      "package-name": "alfred-api",
+      "component": "api",
       "changelog-path": "CHANGELOG.md",
       "release-type": "simple",
       "bump-minor-pre-major": false,
