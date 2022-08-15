@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "2.7.2"
@@ -10,7 +11,7 @@ plugins {
 }
 
 group = "com.gunmer"
-version = "0.1.0"
+version = file("version.txt").readText().trim()
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
@@ -41,6 +42,15 @@ dependencies {
 
 springBoot {
     buildInfo()
+}
+
+tasks.getByName<BootJar>("bootJar") {
+    manifest {
+        attributes(
+            "Implementation-Title" to project.name,
+            "Implementation-Version" to project.version,
+        )
+    }
 }
 
 tasks.getByName<Jar>("jar") {
