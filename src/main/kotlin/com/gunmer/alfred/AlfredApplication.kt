@@ -1,11 +1,11 @@
-package com.gunmer.alfredapi
+package com.gunmer.alfred
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class AlfredApiApplication
+class AlfredApplication
 
 fun main(args: Array<String>) {
-    runApplication<AlfredApiApplication>(*args)
+    runApplication<AlfredApplication>(*args)
 }

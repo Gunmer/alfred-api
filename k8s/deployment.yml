@@ -1,0 +1,56 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: alfred-api-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alfred-api
+  template:
+    metadata:
+      labels:
+        app: alfred-api
+    spec:
+      imagePullSecrets:
+        - name: penworacr
+      restartPolicy: Always
+      containers:
+        - name: alfred-api
+          image: penworacr.azurecr.io/alfred-api:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: DB_PASSWORD
+              value: secret
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+            requests:
+              cpu: 500m
+              memory: 512Mi
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /alfred-api/actuator/health/liveness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 40
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 2
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /alfred-api/actuator/health/readiness
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 2
