@@ -6,12 +6,76 @@ on:
       - main
 
 jobs:
-  release-please:
+  prepare-release:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release.major }}.${{ steps.release.minor }}.${{ steps.release.patch }}
+      release_created: ${{ steps.release.release_created }}
     steps:
-      - uses: google-github-actions/release-please-action@v3
+      - name: Prepare release
+        uses: google-github-actions/release-please-action@v3
+        id: release
         with:
           command: release-pr
           release-type: simple
           package-name: alfred-api
           changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
+
+  generate-release:
+    runs-on: ubuntu-latest
+    needs: prepare-release
+    outputs:
+      image: ${{ steps.build-image.outputs.image }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Build jar
+        run: ./gradlew build
+      - uses: azure/docker-login@v1
+        with:
+          login-server: penworacr.azurecr.io
+          username: ${{ secrets.PENWORACR_USERNAME }}
+          password: ${{ secrets.PENWORACR_PASSWORD }}
+      - name: Build and push image
+        if: ${{ needs.prepare-release.outputs.release_created }}
+        id: build-image
+        env:
+          REGISTRY: penworacr.azurecr.io
+          REPOSITORY: alfred-api
+          IMAGE_TAG: ${{ needs.prepare-release.outputs.version }}
+        run: |
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$REGISTRY/$REPOSITORY:$IMAGE_TAG"
+
+  deploy-release:
+    runs-on: ubuntu-latest
+    needs:
+      - prepare-release
+      - generate-release
+    steps:
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        if: ${{ needs.prepare-release.outputs.release_created }}
+      - name: Set AKS context
+        uses: azure/k8s-set-context@v2
+        if: ${{ needs.prepare-release.outputs.release_created }}
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.PENWORAKS_KUBECONFIG }}
+          context: PennyworthAKS
+      - name: Deploy new image
+        if: ${{ needs.prepare-release.outputs.release_created }}
+        env:
+          IMAGE: ${{ needs.generate-release.outputs.image }}
+          CONTAINER: alfred-api
+          DEPLOYMENT: alfred-api-deploy
+        run: |
+          kubectl set image deployment $DEPLOYMENT $CONTAINER=$IMAGE
