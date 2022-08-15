@@ -1,5 +1,6 @@
 {
   "packages": {
+    "last-release-sha": "32bbec57de3ccca32857df5dac455fd308af7267",
     ".": {
       "changelog-path": "CHANGELOG.md",
       "release-type": "simple",
