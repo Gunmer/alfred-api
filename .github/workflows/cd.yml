@@ -38,33 +38,46 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - prepare-release
-    if: ${{ needs.prepare-release.outputs.release_created }}
     outputs:
       image: ${{ steps.build-image.outputs.image }}
     steps:
+      - name: Check Inputs
+        env:
+          RELEASE_CREATED: ${{ needs.prepare-release.outputs.release_created }}
+        run: |
+          echo release_created: ${{ needs.prepare-release.outputs.release_created }}
+          echo RELEASE_CREATED: $RELEASE_CREATED
       - name: Checkout repository
         uses: actions/checkout@v3
+        if: ${{ needs.prepare-release.outputs.release_created }}
       - name: Read version
+        if: ${{ needs.prepare-release.outputs.release_created }}
         id: read-version
         run: |
           VERSION=$(cat version.txt)
           echo Version read: $VERSION
           echo "::set-output name=version::$VERSION"
       - name: Setup Java
+        if: ${{ needs.prepare-release.outputs.release_created }}
         uses: actions/setup-java@v3
         with:
           distribution: zulu
           java-version: 17
       - name: Setup Gradle
+        if: ${{ needs.prepare-release.outputs.release_created }}
         uses: gradle/gradle-build-action@v2
       - name: Build jar
+        if: ${{ needs.prepare-release.outputs.release_created }}
         run: ./gradlew build
-      - uses: azure/docker-login@v1
+      - name: Login in ACR
+        if: ${{ needs.prepare-release.outputs.release_created }}
+        uses: azure/docker-login@v1
         with:
           login-server: penworacr.azurecr.io
           username: ${{ secrets.PENWORACR_USERNAME }}
           password: ${{ secrets.PENWORACR_PASSWORD }}
       - name: Build and push image
+        if: ${{ needs.prepare-release.outputs.release_created }}
         id: build-image
         env:
           REGISTRY: penworacr.azurecr.io
@@ -80,17 +93,19 @@ jobs:
     needs:
       - generate-release
       - prepare-release
-    if: ${{ needs.prepare-release.outputs.release_created }}
     steps:
       - name: Install kubectl
+        if: ${{ needs.prepare-release.outputs.release_created }}
         uses: azure/setup-kubectl@v3
       - name: Set AKS context
+        if: ${{ needs.prepare-release.outputs.release_created }}
         uses: azure/k8s-set-context@v2
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.PENWORAKS_KUBECONFIG }}
           context: PennyworthAKS
       - name: Deploy new image
+        if: ${{ needs.prepare-release.outputs.release_created }}
         env:
           IMAGE: ${{ needs.generate-release.outputs.image }}
           CONTAINER: alfred-api
