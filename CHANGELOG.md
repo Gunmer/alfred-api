@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/Gunmer/alfred-api/compare/v0.2.2...v0.3.0) (2022-08-16)
+
+
+### Features
+
+* deploy new release in AKS ([fda5cc5](https://github.com/Gunmer/alfred-api/commit/fda5cc514b110bf1fbda2611e396fb97ee0d32b3))
+
+
+### Bug Fixes
+
+* remove acr user from secrets ([d3c1c5a](https://github.com/Gunmer/alfred-api/commit/d3c1c5a222775d7e85a6d4ab9f1b332d8820b2a5))
+
 ## [0.2.2](https://github.com/Gunmer/alfred-api/compare/v0.2.1...v0.2.2) (2022-08-16)
 
 
