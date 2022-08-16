@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.0](https://github.com/Gunmer/alfred-api/compare/v0.3.0...v1.0.0) (2022-08-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* removes check step
+
+### Features
+
+* removes check step ([febc9af](https://github.com/Gunmer/alfred-api/commit/febc9affc35e3df316accceb5a22b5031adf00f0))
+* removes unused workflows ([2c07d6b](https://github.com/Gunmer/alfred-api/commit/2c07d6b714d09e209849d91bdf48e8c75b233d00))
+
 ## [0.3.0](https://github.com/Gunmer/alfred-api/compare/v0.2.2...v0.3.0) (2022-08-16)
 
 
