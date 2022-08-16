@@ -17,7 +17,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: alfred-api
-          image: penworacr.azurecr.io/alfred-api:latest
+          image: penworacr.azurecr.io/alfred-api:1.0.0
           imagePullPolicy: Always
           ports:
           - containerPort: 8080
@@ -29,18 +29,18 @@ spec:
               value: secret
           resources:
             limits:
-              cpu: 1000m
-              memory: 1024Mi
-            requests:
-              cpu: 500m
+              cpu: 150m
               memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
           livenessProbe:
             failureThreshold: 3
             httpGet:
               path: /alfred-api/actuator/health/liveness
               port: 8080
               scheme: HTTP
-            initialDelaySeconds: 40
+            initialDelaySeconds: 120
             periodSeconds: 20
             successThreshold: 1
             timeoutSeconds: 2
@@ -50,7 +50,7 @@ spec:
               path: /alfred-api/actuator/health/readiness
               port: 8080
               scheme: HTTP
-            initialDelaySeconds: 20
+            initialDelaySeconds: 100
             periodSeconds: 20
             successThreshold: 1
             timeoutSeconds: 2
