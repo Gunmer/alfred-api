@@ -20,19 +20,6 @@ jobs:
           command: manifest
           token: ${{secrets.GITHUB_TOKEN}}
           release-type: simple
-      - name: Check outputs
-        env:
-          RELEASE_CREATED: ${{ steps.release-please.outputs.release_created }}
-          TAG_NAME: ${{ steps.release-please.outputs.tag_name }}
-          MAJOR: ${{ steps.release-please.outputs.major }}
-          MINOR: ${{ steps.release-please.outputs.minor }}
-          PATCH: ${{ steps.release-please.outputs.patch }}
-        run: |
-          echo release_created: $RELEASE_CREATED
-          echo tag_name: $TAG_NAME
-          echo major: $MAJOR
-          echo minor: $MINOR
-          echo patch: $PATCH
 
   generate-release:
     runs-on: ubuntu-latest
@@ -42,12 +29,6 @@ jobs:
     outputs:
       image: ${{ steps.build-image.outputs.image }}
     steps:
-      - name: Check Inputs
-        env:
-          RELEASE_CREATED: ${{ needs.prepare-release.outputs.release_created }}
-        run: |
-          echo release_created: ${{ needs.prepare-release.outputs.release_created }}
-          echo RELEASE_CREATED: $RELEASE_CREATED
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Read version
