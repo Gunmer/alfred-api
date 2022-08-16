@@ -74,7 +74,7 @@ jobs:
         uses: azure/docker-login@v1
         with:
           login-server: penworacr.azurecr.io
-          username: ${{ secrets.PENWORACR_USERNAME }}
+          username: penworacr
           password: ${{ secrets.PENWORACR_PASSWORD }}
       - name: Build and push image
         if: ${{ needs.prepare-release.outputs.release_created }}
@@ -93,19 +93,17 @@ jobs:
     needs:
       - generate-release
       - prepare-release
+    if: ${{ needs.prepare-release.outputs.release_created }}
     steps:
       - name: Install kubectl
-        if: ${{ needs.prepare-release.outputs.release_created }}
         uses: azure/setup-kubectl@v3
       - name: Set AKS context
-        if: ${{ needs.prepare-release.outputs.release_created }}
         uses: azure/k8s-set-context@v2
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.PENWORAKS_KUBECONFIG }}
           context: PennyworthAKS
       - name: Deploy new image
-        if: ${{ needs.prepare-release.outputs.release_created }}
         env:
           IMAGE: ${{ needs.generate-release.outputs.image }}
           CONTAINER: alfred-api
