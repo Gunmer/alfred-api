@@ -9,7 +9,6 @@ jobs:
   prepare-release:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.release.major }}.${{ steps.release.minor }}.${{ steps.release.patch }}
       release_created: ${{ steps.release.release_created }}
     steps:
       - name: Checkout repository
