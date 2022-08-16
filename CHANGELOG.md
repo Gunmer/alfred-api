@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/Gunmer/alfred-api/compare/v0.1.0...v0.2.0) (2022-08-16)
+
+
+### Features
+
+* run new cd ([b6e3486](https://github.com/Gunmer/alfred-api/commit/b6e348680f49a2f6aa68322ac406e3f7c444100a))
+
+
+### Bug Fixes
+
+* remove unnecessary output ([cee3cee](https://github.com/Gunmer/alfred-api/commit/cee3cee7cea2fbf501ba15a6564154e79aa6a0f8))
+
 ## [0.1.0](https://github.com/Gunmer/alfred-api/compare/v0.0.0...v0.1.0) (2022-08-15)
 
 
