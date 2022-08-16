@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/Gunmer/alfred-api/compare/v0.2.0...v0.2.1) (2022-08-16)
+
+
+### Bug Fixes
+
+* check outputs ([1b3e872](https://github.com/Gunmer/alfred-api/commit/1b3e8722d9bff4055fe3cda2be7e828c0e911ab0))
+
 ## [0.2.0](https://github.com/Gunmer/alfred-api/compare/v0.1.0...v0.2.0) (2022-08-16)
 
 
